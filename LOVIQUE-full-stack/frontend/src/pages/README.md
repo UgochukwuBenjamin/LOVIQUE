@@ -1,0 +1,1 @@
+Add route-level page components here as the app grows, for example `Discover.jsx`, `Profile.jsx`, `SignIn.jsx` and `Settings.jsx`.

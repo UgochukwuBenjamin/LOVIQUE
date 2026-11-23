@@ -12,7 +12,7 @@ export function ProfileProvider({ children }) {
     interests: [],
     bio: "",
     visibility: "public",
-    allowMessages: true,
+    allowMessages: "matches",
     showInterests: true
   });
 

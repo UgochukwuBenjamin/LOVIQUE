@@ -1,8 +1,10 @@
+# Node dependencies
 node_modules/
-dist/
-.venv/
-__pycache__/
-*.py[cod]
+**/node_modules/
+
+# Environment variables
 .env
-*.db
-.DS_Store
+.env.*
+**/.env
+**/.env.*
+!.env.example

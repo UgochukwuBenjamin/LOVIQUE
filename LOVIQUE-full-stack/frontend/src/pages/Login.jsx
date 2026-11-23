@@ -1,6 +1,7 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Login() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function Login() {
   });
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -19,7 +21,7 @@ export default function Login() {
     });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -28,10 +30,39 @@ export default function Login() {
       return;
     }
 
-    // Demo navigation only.
-    // Replace this with your Flask authentication request
-    // and navigate only when the backend confirms success.
-    navigate("/onboarding");
+    try {
+      setLoading(true);
+
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed.");
+      }
+
+      if (!data.token) {
+        throw new Error("Authentication token was not returned.");
+      }
+
+      sessionStorage.setItem("lovique_token", data.token);
+
+      navigate("/onboarding");
+
+    } catch (err) {
+      setError(err.message || "Unable to connect to the server.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,6 +96,8 @@ export default function Login() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
+            autoComplete="email"
+            required
             className="w-full bg-[#242424] text-white border border-gray-700 rounded-lg p-3 mb-5 outline-none focus:border-[#C11235]"
           />
 
@@ -79,12 +112,14 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
             placeholder="Enter your password"
+            autoComplete="current-password"
+            required
             className="w-full bg-[#242424] text-white border border-gray-700 rounded-lg p-3 mb-5 outline-none focus:border-[#C11235]"
           />
 
           {/* Error */}
           {error && (
-            <p className="text-red-400 text-sm mb-4">
+            <p className="text-red-400 text-sm mb-4" role="alert">
               {error}
             </p>
           )}
@@ -102,9 +137,10 @@ export default function Login() {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-[#C11235] hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition"
+            disabled={loading}
+            className="w-full bg-[#C11235] hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
           >
-            Sign In
+            {loading ? "Signing In..." : "Sign In"}
           </button>
 
         </form>

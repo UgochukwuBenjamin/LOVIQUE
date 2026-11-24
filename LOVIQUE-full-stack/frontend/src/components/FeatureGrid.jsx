@@ -2,7 +2,7 @@ import { Users, Compass, ShieldCheck } from 'lucide-react'
 
 const features = [
   { icon: Compass, title: 'Discover interests', text: 'Explore clubs and communities built around the things you enjoy.' },
-  { icon: Users, title: 'Find your people', text: 'Connect with others through shared hobbies, creativity and goals.' },
+  { icon: Users, title: 'Find your people', text: 'Connect with othecrs through shared hobbies, creativity and goals.' },
   { icon: ShieldCheck, title: 'Community first', text: 'Make room for respectful conversations, privacy and safer interactions.' },
 ]
 

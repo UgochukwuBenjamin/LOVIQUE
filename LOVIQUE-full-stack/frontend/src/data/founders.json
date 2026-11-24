@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Tiffany",
+    "position": "Database Administrator",
+    "company": "C.E.O of Tiffany's Technology Group",
+    "bio": "Managing database systems, protecting data integrity, and ensuring information is securely organized, accessible, and reliable."
+  },
+  {
+    "id": 2,
+    "name": "Director Humble",
+    "position": "Frontend Developer",
+    "company": "CEO of Humble Tech",
+    "bio": "Designing and developing engaging, responsive user interfaces that deliver smooth, accessible, and enjoyable digital experiences."
+  },
+  {
+    "id": 3,
+    "name": "sudoCyph3r",
+    "position": "Backend Developer",
+    "company": "C.E.O of Cyph3r Group",
+    "bio": "Building and maintaining the server-side systems, APIs, and database integrations that keep applications secure, reliable, and running efficiently."
+  }
+]

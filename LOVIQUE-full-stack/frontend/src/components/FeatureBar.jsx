@@ -31,7 +31,7 @@ function FeatureBar() {
   ];
 
   return (
-    <section className="feature-section" id="features">
+    <section className="feature-section">
 
       <div className="feature-bar">
 

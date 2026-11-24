@@ -1,77 +1,56 @@
-import { Link } from "react-router-dom";
-import { Heart, Menu, X } from "lucide-react";
+
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <nav className="navbar">
-      {/* Logo */}
-      <Link to="/" className="navbar-logo">
-        LOVIQUE
-        <Heart size={17} fill="currentColor" />
+
+      <Link to="/" className="logo">
+        <span className="logo-text">LOVIQUE</span>
       </Link>
 
-      {/* Desktop links */}
-      <div className="navbar-links">
-        <Link to="/" className="nav-link">
-          Home
-        </Link>
-
-        <a href="#about" className="nav-link">
-          About
-        </a>
-
-        <a href="#discover" className="nav-link">
-          Discover
-        </a>
+      <div className="nav-links">
+        <Link to="/" className="active">Home</Link>
+        <a href="#about">About</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#features">Features</a>
       </div>
 
-      {/* Desktop buttons */}
-      <div className="navbar-actions">
-        <Link to="/login" className="navbar-login">
+      <div className="nav-buttons">
+        <Link to="/login" className="login-btn">
           Login
         </Link>
 
-        <Link to="/signup" className="navbar-signup">
-          Sign Up
+        <Link to="/signup" className="signup-btn">
+          Get Started
         </Link>
       </div>
 
-      {/* Mobile menu button */}
       <button
         className="mobile-menu-button"
         onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle navigation"
+        aria-label="Toggle navigation menu"
+        aria-expanded={menuOpen}
       >
-        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        {menuOpen ? "✕" : "☰"}
       </button>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className="mobile-menu">
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            Home
-          </Link>
-
-          <a href="#about" onClick={() => setMenuOpen(false)}>
-            About
-          </a>
-
-          <a href="#discover" onClick={() => setMenuOpen(false)}>
-            Discover
-          </a>
-
-          <Link to="/login" onClick={() => setMenuOpen(false)}>
-            Login
-          </Link>
-
-          <Link to="/signup" onClick={() => setMenuOpen(false)}>
-            Sign Up
-          </Link>
+          <Link to="/" onClick={closeMenu}>Home</Link>
+          <a href="#about" onClick={closeMenu}>About</a>
+          <a href="#testimonials" onClick={closeMenu}>Testimonials</a>
+          <a href="#features" onClick={closeMenu}>Features</a>
+          <Link to="/login" onClick={closeMenu}>Login</Link>
+          <Link to="/signup" onClick={closeMenu}>Get Started</Link>
         </div>
       )}
+
     </nav>
   );
 }

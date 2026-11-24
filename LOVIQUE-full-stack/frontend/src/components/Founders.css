@@ -1,0 +1,248 @@
+
+/* =========================
+   FOUNDERS PAGE
+========================= */
+
+.founders-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #10070d;
+  color: #fff0f5;
+  overflow: hidden;
+}
+
+/* HERO */
+
+.founders-hero {
+  padding: 130px 8% 100px;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(157, 32, 83, 0.25),
+      transparent 55%
+    ),
+    #10070d;
+}
+
+.founders-label,
+.founders-heading > span,
+.founders-ending > span {
+  color: #e879a1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.founders-hero h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 600;
+  margin: 22px 0;
+}
+
+.founders-hero h1 span,
+.founders-ending h2 span {
+  color: #e879a1;
+  font-style: italic;
+}
+
+.founders-hero p {
+  max-width: 650px;
+  margin: auto;
+  color: #c7aab7;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* FOUNDERS SECTION */
+
+.founders-section {
+  padding: 60px 7% 120px;
+}
+
+.founders-heading {
+  text-align: center;
+  margin-bottom: 65px;
+}
+
+.founders-heading h2 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(30px, 4vw, 48px);
+  margin: 18px 0 12px;
+}
+
+.founders-heading p {
+  color: #b99eab;
+  font-size: 14px;
+}
+
+/* GRID - THREE CENTERED CARDS */
+
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 320px));
+  gap: 30px;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* CARD */
+
+.founder-card {
+  width: 100%;
+  margin-left: 7rem;
+  background: linear-gradient(
+    145deg,
+    #29121f,
+    #190b13
+  );
+  border: 1px solid rgba(232, 121, 161, 0.15);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.35s ease;
+}
+
+.founder-card:hover {
+  transform: translateY(-9px);
+  border-color: rgba(232, 121, 161, 0.6);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+}
+
+/* PROFILE IMAGE */
+
+.founder-image {
+  width: 100%;
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #512039,
+    #24101b
+  );
+}
+
+.founder-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  visibility: visible;
+  transition: transform 0.5s ease;
+}
+
+.founder-card:hover .founder-image img {
+  transform: scale(1.06);
+}
+
+.founder-number {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: rgba(16, 7, 13, 0.8);
+  color: #f3a1bd;
+  padding: 8px 13px;
+  border-radius: 5px;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+/* FOUNDER DETAILS */
+
+.founder-info {
+  padding: 25px 22px 30px;
+}
+
+.founder-company {
+  color: #e879a1;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.founder-info h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  margin: 12px 0 7px;
+}
+
+.founder-info h4 {
+  color: #e879a1;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.founder-info p {
+  color: #bda8b2;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* ENDING */
+
+.founders-ending {
+  padding: 100px 8%;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    #29101e,
+    #160912
+  );
+}
+
+.founders-ending h2 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.35;
+  margin: 22px 0;
+}
+
+.founders-ending p {
+  color: #c7aab7;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* TABLET */
+
+@media (max-width: 1050px) {
+  .founders-grid {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+    gap: 25px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .founders-hero {
+    padding: 100px 7% 75px;
+  }
+
+  .founders-section {
+    padding: 55px 6% 80px;
+  }
+
+  .founders-heading {
+    margin-bottom: 45px;
+  }
+
+  .founders-grid {
+    grid-template-columns: minmax(0, 380px);
+    gap: 25px;
+  }
+
+  .founder-image {
+    height: 350px;
+  }
+
+  .founders-ending {
+    padding: 75px 7%;
+  }
+}

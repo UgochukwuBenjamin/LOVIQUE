@@ -1,3 +1,4 @@
+
 import {
   Heart,
   ArrowRight,
@@ -7,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 
 import coupleImage from "../images/lovique-couple.png";
+import flowersImage from "../images/lovique-flowers.png";
 
 function Hero() {
   return (
@@ -80,6 +82,13 @@ function Hero() {
             alt="LOVIQUE featured people"
             className="couple-image"
           />
+
+          {/* Flower overlay */}
+          {/* <img
+            src={flowersImage}
+            alt=""
+            className="hero-flowers" */}
+        
 
         </div>
 

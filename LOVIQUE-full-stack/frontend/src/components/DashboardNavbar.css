@@ -1,0 +1,136 @@
+
+.fb-topbar {
+  height: 76px;
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(12, 12, 16, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fb-logo {
+  color: white;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+
+.fb-logo span {
+  color: #e63950;
+  margin-left: 4px;
+}
+
+.fb-search {
+  height: 43px;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 15px;
+  background: #202026;
+  border-radius: 30px;
+  color: #92929e;
+}
+
+.fb-search input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.fb-top-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+}
+
+.fb-top-link {
+  height: 100%;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #92929e;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.fb-top-link:hover {
+  color: #ff5369;
+}
+
+.fb-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fb-icon-button {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: #222229;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.fb-top-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.fb-top-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 760px) {
+  .fb-topbar {
+    height: 65px;
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .fb-logo {
+    font-size: 18px;
+  }
+
+  .fb-search {
+    flex: 1;
+    width: auto;
+  }
+
+  .fb-top-links {
+    display: none;
+  }
+
+  .fb-top-actions {
+    gap: 6px;
+  }
+
+  .fb-icon-button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .fb-top-avatar {
+    width: 34px;
+    height: 34px;
+  }
+}

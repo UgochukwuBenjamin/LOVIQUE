@@ -8,9 +8,14 @@ import cors from "cors";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://lovique-oemi-l5dh6i1rt-bighumble702-1564.vercel.app/",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
   })
 );
 
@@ -75,6 +80,6 @@ app.get("/api/tables", async (req, res) => {
 // Start Server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`LOVIQUE API running on port ${PORT}`);
 });

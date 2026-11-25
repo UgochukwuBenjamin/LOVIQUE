@@ -1,5 +1,7 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import faviconImage from "./images/as.jpg";
 
 import { ProfileProvider } from "./ProfileContext";
 
@@ -43,6 +45,16 @@ function Home() {
 
 // MAIN APP
 export default function App() {
+
+  // Set LOVIQUE favicon
+  useEffect(() => {
+    let favicon = document.querySelector("link[rel='icon']");
+
+    if (favicon) {
+      favicon.href = faviconImage;
+    }
+  }, []);
+
   return (
     <ProfileProvider>
       <BrowserRouter>

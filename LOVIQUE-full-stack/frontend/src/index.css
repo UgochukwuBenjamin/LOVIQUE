@@ -118,7 +118,11 @@ input[type="submit"],
   }
 }
 
-
+.logo-heart {
+  color: #ff82aa;
+  margin-left: 5px;
+  font-size: 18px;
+}
 .nav-links,
 .navbar-links {
   display: flex;

@@ -9,6 +9,13 @@
   background: #10070d;
   color: #fff0f5;
   overflow: hidden;
+  box-sizing: border-box;
+}
+
+.founders-page *,
+.founders-page *::before,
+.founders-page *::after {
+  box-sizing: border-box;
 }
 
 /* HERO */
@@ -58,7 +65,8 @@
 /* FOUNDERS SECTION */
 
 .founders-section {
-  padding: 60px 7% 120px;
+  width: 100%;
+  padding: 60px 5% 120px;
 }
 
 .founders-heading {
@@ -77,15 +85,17 @@
   font-size: 14px;
 }
 
-/* GRID - THREE CENTERED CARDS */
+/* GRID */
 
 .founders-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 320px));
   gap: 30px;
   justify-content: center;
+  justify-items: center;
   align-items: stretch;
   width: 100%;
+  max-width: 1080px;
   margin: 0 auto;
 }
 
@@ -93,12 +103,16 @@
 
 .founder-card {
   width: 100%;
-  margin-left: 7rem;
+  max-width: 320px;
+  min-width: 0;
+  margin: 0;
+
   background: linear-gradient(
     145deg,
     #29121f,
     #190b13
   );
+
   border: 1px solid rgba(232, 121, 161, 0.15);
   border-radius: 18px;
   overflow: hidden;
@@ -209,11 +223,12 @@
   line-height: 1.8;
 }
 
-/* TABLET */
+/* SMALL LAPTOPS AND TABLETS */
 
 @media (max-width: 1050px) {
   .founders-grid {
     grid-template-columns: repeat(2, minmax(0, 320px));
+    max-width: 665px;
     gap: 25px;
   }
 }
@@ -226,7 +241,7 @@
   }
 
   .founders-section {
-    padding: 55px 6% 80px;
+    padding: 55px 20px 80px;
   }
 
   .founders-heading {
@@ -234,8 +249,20 @@
   }
 
   .founders-grid {
+    display: grid;
     grid-template-columns: minmax(0, 380px);
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
     gap: 25px;
+  }
+
+  .founder-card {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
   }
 
   .founder-image {

@@ -1,3 +1,4 @@
+
 import { Heart, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -96,8 +97,9 @@ function Signup() {
       <div className="auth-overlay"></div>
 
       <nav className="auth-navbar">
-        <Link to="/" className="auth-logo">
-          LOVIQUE<span>♥</span>
+        <Link to="/" className="logo">
+          <span className="logo-text">LOVIQUE</span>
+          <span className="logo-heart">♥</span>
         </Link>
 
         <p>

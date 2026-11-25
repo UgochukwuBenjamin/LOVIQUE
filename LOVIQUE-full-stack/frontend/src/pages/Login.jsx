@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -70,9 +71,9 @@ export default function Login() {
 
       <div className="w-full max-w-md bg-[#171717] border border-gray-800 rounded-2xl p-8 shadow-xl">
 
-        {/* Logo */}
-        <Link to="/" className="text-3xl font-bold text-[#C11235]">
-          LOVIQUE
+        {/* Logo - Matches Navbar */}
+        <Link to="/" className="logo">
+          <span className="logo-text">LOVIQUE</span>
         </Link>
 
         <h2 className="text-2xl font-bold text-white mt-8 mb-2">

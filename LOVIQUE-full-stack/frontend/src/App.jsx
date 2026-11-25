@@ -30,19 +30,12 @@ function Home() {
   return (
     <>
       <Navbar />
-
       <Hero />
-
       <FeatureBar />
-
       <About />
-
       <Testimonials />
-
       <Founders />
-
       <Features />
-
       <Footer />
     </>
   );
@@ -52,8 +45,7 @@ function Home() {
 export default function App() {
   return (
     <ProfileProvider>
-      <BrowserRouter>
-
+      <BrowserRouter basename="/LOVIQUE">
         <Routes>
 
           {/* Homepage */}
@@ -66,23 +58,15 @@ export default function App() {
 
           {/* Dashboard */}
           <Route element={<DashboardLayout />}>
-
             <Route path="/dashboard" element={<Dashboard />} />
-
             <Route path="/discover" element={<Discover />} />
-
             <Route path="/communities" element={<Communities />} />
-
             <Route path="/messages" element={<Messages />} />
-
             <Route path="/notifications" element={<Notifications />} />
-
             <Route path="/settings" element={<Settings />} />
-
           </Route>
 
         </Routes>
-
       </BrowserRouter>
     </ProfileProvider>
   );

@@ -45,7 +45,7 @@ function Home() {
 export default function App() {
   return (
     <ProfileProvider>
-      <BrowserRouter basename="/LOVIQUE">
+      <BrowserRouter>
         <Routes>
 
           {/* Homepage */}
@@ -71,4 +71,3 @@ export default function App() {
     </ProfileProvider>
   );
 }
-

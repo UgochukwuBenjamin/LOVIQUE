@@ -10,14 +10,12 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://lovique-oemi-l5dh6i1rt-bighumble702-1564.vercel.app/",
+  "https://lovique-oemi-l5dh6i1rt-bighumble702-1564.vercel.app"
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-  })
-);
+app.use(cors({
+  origin: allowedOrigins
+}));
 
 // Middleware
 app.use(express.json());

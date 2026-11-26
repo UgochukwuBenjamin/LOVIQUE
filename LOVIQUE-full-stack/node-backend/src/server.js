@@ -10,7 +10,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://lovique-oemi-l5dh6i1rt-bighumble702-1564.vercel.app"
+  "https://lovique-oemi.vercel.app"
 ];
 
 app.use(cors({

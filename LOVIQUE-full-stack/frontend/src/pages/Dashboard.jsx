@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useProfile } from "../ProfileContext";
+
 import {
   Image,
   Video,
@@ -21,11 +23,48 @@ import {
   Plus,
   Sparkles,
   TrendingUp,
-  ArrowUpRight
+  ArrowUpRight,
+  UserRound
 } from "lucide-react";
 
 import "./Dashboard.css";
 
+// DEFAULT PROFILE AVATAR
+function ProfileAvatar({ src, name, className = "" }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div
+      className={className}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+        borderRadius: "50%",
+        background: "#242424",
+        flexShrink: 0
+      }}
+    >
+      {src && !imageError ? (
+        <img
+          src={src}
+          alt={name || "Profile picture"}
+          onError={() => setImageError(true)}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+          }}
+        />
+      ) : (
+        <UserRound size={22} color="#999" />
+      )}
+    </div>
+  );
+}
+
+// SAMPLE COMMUNITY POSTS
 const initialPosts = [
   {
     id: 1,
@@ -72,10 +111,11 @@ const initialPosts = [
   }
 ];
 
+// SAMPLE STORIES
 const stories = [
   {
     name: "Your Story",
-    image: "https://i.pravatar.cc/150?img=5",
+    image: "",
     own: true
   },
   {
@@ -96,6 +136,7 @@ const stories = [
   }
 ];
 
+// SAMPLE PEOPLE
 const people = [
   {
     name: "Alex Morgan",
@@ -115,6 +156,7 @@ const people = [
   }
 ];
 
+// SAMPLE COMMUNITIES
 const communities = [
   {
     icon: "✳",
@@ -137,6 +179,8 @@ const communities = [
 ];
 
 export default function Dashboard() {
+  const { profile, profileLoading } = useProfile();
+
   const [posts, setPosts] = useState(initialPosts);
   const [postText, setPostText] = useState("");
   const [commentText, setCommentText] = useState({});
@@ -145,18 +189,29 @@ export default function Dashboard() {
   const [activeComment, setActiveComment] = useState(null);
   const [search, setSearch] = useState("");
 
+  // AUTHENTICATED USER
   const currentUser = {
-    name: "Your Name",
-    image: "https://i.pravatar.cc/150?img=5"
+    name:
+      profile.fullName ||
+      profile.firstName ||
+      profile.username ||
+      "Your Name",
+
+    username: profile.username
+      ? `@${profile.username}`
+      : "@you",
+
+    image: profile.avatarUrl || ""
   };
 
+  // CREATE POST
   const createPost = () => {
     if (!postText.trim()) return;
 
     const newPost = {
       id: Date.now(),
       name: currentUser.name,
-      username: "@you",
+      username: currentUser.username,
       avatar: currentUser.image,
       time: "Just now",
       content: postText.trim(),
@@ -169,6 +224,7 @@ export default function Dashboard() {
     setPostText("");
   };
 
+  // LIKE POSTS
   const toggleLike = (postId) => {
     setLikedPosts((previous) =>
       previous.includes(postId)
@@ -177,6 +233,7 @@ export default function Dashboard() {
     );
   };
 
+  // ADD COMMENTS
   const addComment = (postId) => {
     const text = commentText[postId]?.trim();
 
@@ -206,6 +263,7 @@ export default function Dashboard() {
     }));
   };
 
+  // FOLLOW PEOPLE
   const toggleFollow = (name) => {
     setFollowedPeople((previous) =>
       previous.includes(name)
@@ -214,12 +272,14 @@ export default function Dashboard() {
     );
   };
 
+  // SEARCH POSTS
   const filteredPosts = posts.filter((post) =>
     `${post.name} ${post.content}`
       .toLowerCase()
       .includes(search.toLowerCase())
   );
 
+  // SHARE POSTS
   const sharePost = async (post) => {
     if (navigator.share) {
       try {
@@ -239,6 +299,23 @@ export default function Dashboard() {
     }
   };
 
+  // PROFILE LOADING
+  if (profileLoading) {
+    return (
+      <div className="pulse-dashboard">
+        <p
+          style={{
+            textAlign: "center",
+            padding: "40px",
+            color: "white"
+          }}
+        >
+          Loading your LOVIQUE experience...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="pulse-dashboard">
       <div className="pulse-layout">
@@ -246,8 +323,13 @@ export default function Dashboard() {
         {/* LEFT NAVIGATION */}
         <aside className="pulse-sidebar">
           <div className="pulse-sidebar-inner">
+
             <div className="pulse-sidebar-profile">
-              <img src={currentUser.image} alt={currentUser.name} />
+              <ProfileAvatar
+                src={currentUser.image}
+                name={currentUser.name}
+              />
+
               <div>
                 <strong>{currentUser.name}</strong>
                 <span>Your personal space</span>
@@ -294,9 +376,16 @@ export default function Dashboard() {
             </nav>
 
             <div className="pulse-sidebar-card">
-              <span className="pulse-mini-icon"><Sparkles size={17} /></span>
+              <span className="pulse-mini-icon">
+                <Sparkles size={17} />
+              </span>
+
               <h3>Your world, your people.</h3>
-              <p>Discover communities and conversations that matter to you.</p>
+
+              <p>
+                Discover communities and conversations that matter to you.
+              </p>
+
               <Link to="/discover">
                 Explore now <ArrowUpRight size={15} />
               </Link>
@@ -306,6 +395,7 @@ export default function Dashboard() {
               <span>LOVIQUE</span>
               <p>© 2026 LOVIQUE</p>
             </div>
+
           </div>
         </aside>
 
@@ -336,7 +426,9 @@ export default function Dashboard() {
               <div className="pulse-orbit pulse-orbit-one" />
               <div className="pulse-orbit pulse-orbit-two" />
               <div className="pulse-orbit pulse-orbit-three" />
-              <div className="pulse-orbit-core">L<span>♥</span></div>
+              <div className="pulse-orbit-core">
+                L<span>♥</span>
+              </div>
               <span className="pulse-orbit-star star-one">✦</span>
               <span className="pulse-orbit-star star-two">✧</span>
               <span className="pulse-orbit-star star-three">✦</span>
@@ -350,7 +442,10 @@ export default function Dashboard() {
                 <span className="pulse-kicker">MOMENTS</span>
                 <h2>Stories</h2>
               </div>
-              <span className="pulse-section-note">A little glimpse into everyone's world</span>
+
+              <span className="pulse-section-note">
+                A little glimpse into everyone's world
+              </span>
             </div>
 
             <div className="pulse-stories">
@@ -361,14 +456,29 @@ export default function Dashboard() {
                   key={index}
                 >
                   <div className="pulse-story-photo">
-                    <img src={story.image} alt={story.name} />
                     {story.own ? (
-                      <span className="pulse-story-add"><Plus size={17} /></span>
+                      <ProfileAvatar
+                        src={currentUser.image}
+                        name={currentUser.name}
+                      />
+                    ) : (
+                      <img src={story.image} alt={story.name} />
+                    )}
+
+                    {story.own ? (
+                      <span className="pulse-story-add">
+                        <Plus size={17} />
+                      </span>
                     ) : (
                       <span className="pulse-story-indicator" />
                     )}
                   </div>
-                  <span>{story.name}</span>
+
+                  <span>
+                    {story.own
+                      ? currentUser.name.split(" ")[0]
+                      : story.name}
+                  </span>
                 </button>
               ))}
             </div>
@@ -381,11 +491,18 @@ export default function Dashboard() {
                 <span className="pulse-kicker">SHARE SOMETHING</span>
                 <h2>Start a conversation</h2>
               </div>
-              <span className="pulse-composer-spark"><Sparkles size={18} /></span>
+
+              <span className="pulse-composer-spark">
+                <Sparkles size={18} />
+              </span>
             </div>
 
             <div className="pulse-composer-input">
-              <img src={currentUser.image} alt={currentUser.name} />
+              <ProfileAvatar
+                src={currentUser.image}
+                name={currentUser.name}
+              />
+
               <textarea
                 placeholder="What's happening in your world?"
                 value={postText}
@@ -400,10 +517,12 @@ export default function Dashboard() {
                   <Image size={17} />
                   <span>Photo</span>
                 </button>
+
                 <button type="button" title="Add a video">
                   <Video size={17} />
                   <span>Video</span>
                 </button>
+
                 <button type="button" title="Add a feeling">
                   <Smile size={17} />
                   <span>Feeling</span>
@@ -431,6 +550,7 @@ export default function Dashboard() {
 
               <label className="pulse-search">
                 <Search size={17} />
+
                 <input
                   type="search"
                   placeholder="Find a conversation..."
@@ -452,12 +572,24 @@ export default function Dashboard() {
 
                 return (
                   <article className="pulse-post" key={post.id}>
+
                     <div className="pulse-post-header">
                       <div className="pulse-post-author">
-                        <img src={post.avatar} alt={post.name} />
+
+                        <ProfileAvatar
+                          src={post.avatar}
+                          name={post.name}
+                        />
+
                         <div>
                           <h3>{post.name}</h3>
-                          <p>{post.username} <span>·</span> {post.time} <Globe size={12} /></p>
+
+                          <p>
+                            {post.username}
+                            <span> · </span>
+                            {post.time}
+                            <Globe size={12} />
+                          </p>
                         </div>
                       </div>
 
@@ -472,6 +604,7 @@ export default function Dashboard() {
 
                     <div className="pulse-post-content">
                       <p>{post.content}</p>
+
                       {post.image && (
                         <img
                           src={post.image}
@@ -483,9 +616,14 @@ export default function Dashboard() {
 
                     <div className="pulse-post-stats">
                       <span>
-                        <Heart size={15} fill="#ed4560" color="#ed4560" />
+                        <Heart
+                          size={15}
+                          fill="#ed4560"
+                          color="#ed4560"
+                        />
                         {post.likes + (isLiked ? 1 : 0)} reactions
                       </span>
+
                       <button
                         type="button"
                         onClick={() =>
@@ -520,7 +658,10 @@ export default function Dashboard() {
                         <span>Comment</span>
                       </button>
 
-                      <button type="button" onClick={() => sharePost(post)}>
+                      <button
+                        type="button"
+                        onClick={() => sharePost(post)}
+                      >
                         <Share2 size={18} />
                         <span>Share</span>
                       </button>
@@ -528,8 +669,12 @@ export default function Dashboard() {
 
                     {activeComment === post.id && (
                       <div className="pulse-comments">
+
                         {post.comments.map((comment) => (
-                          <div className="pulse-comment" key={comment.id}>
+                          <div
+                            className="pulse-comment"
+                            key={comment.id}
+                          >
                             <strong>{comment.name}</strong>
                             <p>{comment.text}</p>
                           </div>
@@ -547,9 +692,12 @@ export default function Dashboard() {
                               }))
                             }
                             onKeyDown={(e) => {
-                              if (e.key === "Enter") addComment(post.id);
+                              if (e.key === "Enter") {
+                                addComment(post.id);
+                              }
                             }}
                           />
+
                           <button
                             type="button"
                             onClick={() => addComment(post.id)}
@@ -558,8 +706,10 @@ export default function Dashboard() {
                             <Send size={17} />
                           </button>
                         </div>
+
                       </div>
                     )}
+
                   </article>
                 );
               })
@@ -572,12 +722,22 @@ export default function Dashboard() {
 
           <section className="pulse-discovery-card pulse-discover-banner">
             <span className="pulse-kicker">MADE FOR CONNECTION</span>
-            <h2>There is a whole world waiting to meet you.</h2>
-            <p>Find people and communities that make every visit worthwhile.</p>
+
+            <h2>
+              There is a whole world waiting to meet you.
+            </h2>
+
+            <p>
+              Find people and communities that make every visit worthwhile.
+            </p>
+
             <Link to="/discover">
               Discover people <ArrowUpRight size={16} />
             </Link>
-            <div className="pulse-banner-decoration">L<span>♥</span></div>
+
+            <div className="pulse-banner-decoration">
+              L<span>♥</span>
+            </div>
           </section>
 
           <section className="pulse-discovery-card">
@@ -586,6 +746,7 @@ export default function Dashboard() {
                 <span className="pulse-kicker">NEW CONNECTIONS</span>
                 <h3>People to know</h3>
               </div>
+
               <Link to="/discover">See all</Link>
             </div>
 
@@ -596,10 +757,12 @@ export default function Dashboard() {
                 return (
                   <div className="pulse-person" key={person.name}>
                     <img src={person.image} alt={person.name} />
+
                     <div className="pulse-person-info">
                       <strong>{person.name}</strong>
                       <span>Suggested for you</span>
                     </div>
+
                     <button
                       type="button"
                       className={isFollowing ? "following" : ""}
@@ -619,6 +782,7 @@ export default function Dashboard() {
                 <span className="pulse-kicker">FIND YOUR PEOPLE</span>
                 <h3>Trending spaces</h3>
               </div>
+
               <TrendingUp size={18} />
             </div>
 
@@ -629,13 +793,17 @@ export default function Dashboard() {
                   className="pulse-community"
                   key={community.name}
                 >
-                  <span className={`pulse-community-icon ${community.color}`}>
+                  <span
+                    className={`pulse-community-icon ${community.color}`}
+                  >
                     {community.icon}
                   </span>
+
                   <span className="pulse-community-info">
                     <strong>{community.name}</strong>
                     <small>{community.members}</small>
                   </span>
+
                   <ArrowUpRight size={16} />
                 </Link>
               ))}
@@ -648,6 +816,7 @@ export default function Dashboard() {
             <Link to="/settings">Terms</Link>
             <p>Made for meaningful connections. ♥</p>
           </div>
+
         </aside>
 
       </div>

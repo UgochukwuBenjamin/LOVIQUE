@@ -43,46 +43,75 @@ const upload = multer({
 });
 
 // GET /api/profiles/me
+
 router.get("/me", authenticate, async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT
-          user_id AS "userId",
-          full_name AS "fullName",
-          username,
-          first_name AS "firstName",
-          bio,
-          avatar_url AS "avatarUrl",
-          country,
-          profile_visibility AS visibility,
-          onboarding_completed AS "onboardingCompleted",
-          created_at AS "createdAt",
-          updated_at AS "updatedAt"
-       FROM profiles
-       WHERE user_id = $1`,
+      `
+      SELECT
+        p.user_id AS "userId",
+        u.email AS email,
+        p.full_name AS "fullName",
+        p.username AS username,
+        p.first_name AS "firstName",
+        p.bio AS bio,
+        p.avatar_url AS "avatarUrl",
+        p.country AS country,
+        p.profile_visibility AS visibility,
+        p.onboarding_completed AS "onboardingCompleted",
+        p.created_at AS "createdAt",
+        p.updated_at AS "updatedAt",
+
+        COALESCE(
+          (
+            SELECT json_agg(i.name ORDER BY i.name)
+            FROM user_interests ui
+            JOIN interests i ON i.id = ui.interest_id
+            WHERE ui.user_id = p.user_id
+          ),
+          '[]'::json
+        ) AS interests,
+
+        COALESCE(us.allow_messages, 'matches')
+          AS "allowMessages",
+
+        COALESCE(us.show_interests, TRUE)
+          AS "showInterests"
+
+      FROM profiles p
+
+      JOIN users u ON u.id = p.user_id
+
+      LEFT JOIN user_settings us
+        ON us.user_id = p.user_id
+
+      WHERE p.user_id = $1
+      `,
       [req.user.id]
     );
 
     if (result.rows.length === 0) {
       return res.status(404).json({
         status: "error",
-        message: "Profile not found.",
+        message: "Profile not found."
       });
     }
 
-    return res.json({
+    return res.status(200).json({
       status: "success",
-      profile: result.rows[0],
+      profile: result.rows[0]
     });
+
   } catch (error) {
-    console.error("Profile retrieval error:", error.message);
+    console.error("Get profile error:", error.message);
 
     return res.status(500).json({
       status: "error",
-      message: "Unable to retrieve profile.",
+      message: "Unable to retrieve your profile."
     });
   }
 });
+
 
 // POST /api/profiles/complete
 router.post(
